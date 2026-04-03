@@ -85,3 +85,30 @@ fptest-go integrates with `*testing.T` and `t.Run` — your law tests appear as 
 **You implemented `Eq` for a case-insensitive string type.** Is it actually an equivalence relation? `laws.EqLaws` checks reflexivity, symmetry, and transitivity — catching the classic bug where `Equals("ß", "SS")` is true but `Equals("SS", "ß")` is false due to asymmetric Unicode case folding.
 
 **You have a concurrent aggregation pipeline using `Semigroup.Concat`.** If `Concat` isn't associative, the result depends on how goroutines are scheduled. `laws.SemigroupLaws` catches this before it becomes a production Heisenbug.
+
+### Worked examples
+
+The `examples/` directory contains self-contained test files that demonstrate fptest-go against realistic domain problems — not toy arithmetic, but the kinds of types and compositions that appear in production Go services. Each file targets a distinct verification concern and exercises a different subset of the library.
+
+| File | Verification concern | Packages exercised |
+|---|---|---|
+| [`codec_roundtrip_test.go`](examples/codec_roundtrip_test.go) | JSON and base64 serialization round-trips for nested domain structs | `prop` |
+| [`domain_laws_test.go`](examples/domain_laws_test.go) | Algebraic laws for custom domain types: `Money` monoid, case-insensitive `Email` equality, `Priority` ordering | `laws` |
+| [`validation_pipeline_test.go`](examples/validation_pipeline_test.go) | Idempotency of normalization, commutativity of aggregation, oracle equivalence of optimized validators, domain invariants | `prop`, `assert` |
+| [`service_mock_test.go`](examples/service_mock_test.go) | IOEither-based repository pattern with tracked stubs, error simulation, and functional state via `IORef` | `mock`, `assert` |
+| [`generator_composition_test.go`](examples/generator_composition_test.go) | Monadic generator composition: dependent generation via `Chain`, applicative lifting via `Map3`, filtered and sliced collections | `gen`, `prop` |
+| [`config_lens_test.go`](examples/config_lens_test.go) | Lens laws for deeply nested configuration structs (2- and 3-level nesting) | `laws` |
+
+The intent is pedagogical: each example is a complete, runnable test that a developer can adapt to their own domain by substituting types and generators. The progression mirrors how algebraic verification layers onto ordinary Go development — you start with a struct, write a generator, and ask the library to search for law violations across hundreds of random inputs.
+
+```bash
+go test ./examples/... -v
+```
+
+A few design points worth noting:
+
+**The `Money` monoid constrains its generator to a single currency.** A semigroup over multi-currency addition is not associative (you cannot freely regroup `USD + EUR + JPY`). This is not a limitation of the test — it reflects a genuine algebraic constraint. The generator must match the algebra. When it doesn't, `laws.SemigroupLaws` will surface a counterexample.
+
+**The `Order` generator uses `gen.Chain` for dependent generation.** The `Total` field is computed from the generated `Items`, not generated independently. This is the monadic bind pattern applied to test data: the second generator depends on the output of the first. Independent generation (`Map3`, `Map2`) suffices when fields are uncorrelated; `Chain` is necessary when they are not.
+
+**The config lens tests verify hand-written getters and setters.** Go does not have optics as a language feature. When you write `func setHost(h string) func(AppConfig) AppConfig`, you are implementing a lens by hand — and hand-written lenses are where set-get and set-set violations hide. `laws.LensLaws` finds the minimal `AppConfig` that breaks your setter.
