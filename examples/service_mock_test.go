@@ -136,7 +136,7 @@ func TestTrackedFuncDelegation(t *testing.T) {
 	}
 
 	// Failure case
-	assert.AssertIOLeft[error, ServiceUser](t, tracked(-1))
+	_ = assert.AssertIOLeft[error, ServiceUser](t, tracked(-1))
 
 	if ct.CallCount("FindByID") != 2 {
 		t.Fatalf("call count = %d, want 2", ct.CallCount("FindByID"))
