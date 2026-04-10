@@ -4,6 +4,7 @@ package prop
 import (
 	"testing"
 
+	enginerapid "github.com/franchb/fptest/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -16,16 +17,11 @@ func RoundTrip[A, B any](
 	eqA func(A, A) bool,
 	encode func(A) B,
 	decode func(B) A,
+	opts ...Option,
 ) {
 	t.Helper()
-	t.Run(name+"/RoundTrip", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-
-		got := decode(encode(a))
-		if !eqA(got, a) {
-			t.Fatalf("Round-trip violated:\n  original          = %v\n  decode(encode(a)) = %v", a, got)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	RoundTripEngine(t, cfg.runner, name, enginerapid.Wrap(genA), eqA, encode, decode)
 }
 
 // RoundTripPartial verifies a round-trip where decode may fail, returning (A, bool).
@@ -37,19 +33,11 @@ func RoundTripPartial[A, B any](
 	eqA func(A, A) bool,
 	encode func(A) B,
 	decode func(B) (A, bool),
+	opts ...Option,
 ) {
 	t.Helper()
-	t.Run(name+"/RoundTripPartial", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-
-		got, ok := decode(encode(a))
-		if !ok {
-			t.Fatalf("Round-trip decode failed for input: %v", a)
-		}
-		if !eqA(got, a) {
-			t.Fatalf("Round-trip violated:\n  original          = %v\n  decode(encode(a)) = %v", a, got)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	RoundTripPartialEngine(t, cfg.runner, name, enginerapid.Wrap(genA), eqA, encode, decode)
 }
 
 // RoundTripError verifies a round-trip where decode may return an error.
@@ -60,17 +48,9 @@ func RoundTripError[A, B any](
 	eqA func(A, A) bool,
 	encode func(A) B,
 	decode func(B) (A, error),
+	opts ...Option,
 ) {
 	t.Helper()
-	t.Run(name+"/RoundTripError", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-
-		got, err := decode(encode(a))
-		if err != nil {
-			t.Fatalf("Round-trip decode error for input %v: %v", a, err)
-		}
-		if !eqA(got, a) {
-			t.Fatalf("Round-trip violated:\n  original          = %v\n  decode(encode(a)) = %v", a, got)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	RoundTripErrorEngine(t, cfg.runner, name, enginerapid.Wrap(genA), eqA, encode, decode)
 }

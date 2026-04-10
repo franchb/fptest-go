@@ -3,6 +3,7 @@ package prop
 import (
 	"testing"
 
+	enginerapid "github.com/franchb/fptest/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -15,17 +16,11 @@ func Oracle[A, B any](
 	eqB func(B, B) bool,
 	impl func(A) B,
 	reference func(A) B,
+	opts ...Option,
 ) {
 	t.Helper()
-	t.Run(name+"/Oracle", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-
-		got := impl(a)
-		want := reference(a)
-		if !eqB(got, want) {
-			t.Fatalf("Oracle mismatch for input %v:\n  impl      = %v\n  reference = %v", a, got, want)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	OracleEngine(t, cfg.runner, name, enginerapid.Wrap(genA), eqB, impl, reference)
 }
 
 // Idempotent verifies that applying a function twice yields the same result as applying once.
@@ -36,17 +31,11 @@ func Idempotent[A any](
 	genA *rapid.Generator[A],
 	eqA func(A, A) bool,
 	f func(A) A,
+	opts ...Option,
 ) {
 	t.Helper()
-	t.Run(name+"/Idempotent", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-
-		once := f(a)
-		twice := f(once)
-		if !eqA(once, twice) {
-			t.Fatalf("Idempotency violated for input %v:\n  f(a)    = %v\n  f(f(a)) = %v", a, once, twice)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	IdempotentEngine(t, cfg.runner, name, enginerapid.Wrap(genA), eqA, f)
 }
 
 // Commutative verifies that f(a, b) == f(b, a) for all a, b.
@@ -56,18 +45,11 @@ func Commutative[A, B any](
 	genA *rapid.Generator[A],
 	eqB func(B, B) bool,
 	f func(A, A) B,
+	opts ...Option,
 ) {
 	t.Helper()
-	t.Run(name+"/Commutative", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-		b := genA.Draw(t, "b")
-
-		left := f(a, b)
-		right := f(b, a)
-		if !eqB(left, right) {
-			t.Fatalf("Commutativity violated:\n  f(%v, %v) = %v\n  f(%v, %v) = %v", a, b, left, b, a, right)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	CommutativeEngine(t, cfg.runner, name, enginerapid.Wrap(genA), eqB, f)
 }
 
 // Invariant verifies that a predicate holds for all generated inputs.
@@ -76,12 +58,9 @@ func Invariant[A any](
 	name string,
 	genA *rapid.Generator[A],
 	predicate func(A) bool,
+	opts ...Option,
 ) {
 	t.Helper()
-	t.Run(name+"/Invariant", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-		if !predicate(a) {
-			t.Fatalf("Invariant violated for input: %v", a)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	InvariantEngine(t, cfg.runner, name, enginerapid.Wrap(genA), predicate)
 }

@@ -3,6 +3,7 @@ package laws
 import (
 	"testing"
 
+	enginerapid "github.com/franchb/fptest/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -24,24 +25,11 @@ func ChainAssociativity[FA, FB, FC, A, B, C any](
 	chainAB func(func(A) FB) func(FA) FB,
 	chainBC func(func(B) FC) func(FB) FC,
 	chainAC func(func(A) FC) func(FA) FC,
+	opts ...Option,
 ) {
 	t.Helper()
-
-	t.Run("Chain/Associativity", rapid.MakeCheck(func(t *rapid.T) {
-		fa := genFA.Draw(t, "fa")
-		f := genKleisliAB.Draw(t, "f")
-		g := genKleisliBC.Draw(t, "g")
-
-		// Left: Chain(g)(Chain(f)(fa))
-		left := chainBC(g)(chainAB(f)(fa))
-
-		// Right: Chain(x => Chain(g)(f(x)))(fa)
-		right := chainAC(func(a A) FC {
-			return chainBC(g)(f(a))
-		})(fa)
-
-		if !eqFC(left, right) {
-			t.Fatalf("Chain associativity violated:\n  chain(g)(chain(f)(fa))        = %v\n  chain(x=>chain(g)(f(x)))(fa) = %v", left, right)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	ChainAssociativityEngine[FA, FB, FC, A, B, C](t, cfg.runner, eqFC,
+		enginerapid.Wrap(genFA), enginerapid.Wrap(genKleisliAB), enginerapid.Wrap(genKleisliBC),
+		chainAB, chainBC, chainAC)
 }

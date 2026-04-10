@@ -3,6 +3,7 @@ package laws
 import (
 	"testing"
 
+	enginerapid "github.com/franchb/fptest/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -30,35 +31,11 @@ func ApplyAssociativeComposition[FA, FB, FC, FAB, FBC, FAC, FABAC, A, B, C any](
 	genFA *rapid.Generator[FA],
 	genAB *rapid.Generator[func(A) B],
 	genBC *rapid.Generator[func(B) C],
+	opts ...Option,
 ) {
 	t.Helper()
-
-	t.Run("Apply/AssociativeComposition", rapid.MakeCheck(func(t *rapid.T) {
-		fa := genFA.Draw(t, "fa")
-		ab := genAB.Draw(t, "ab")
-		bc := genBC.Draw(t, "bc")
-
-		fab := ptdAB.Of(ab)
-		fbc := ptdBC.Of(bc)
-
-		// compose: (B -> C) -> (A -> B) -> (A -> C)
-		compose := func(g func(B) C) func(func(A) B) func(A) C {
-			return func(f func(A) B) func(A) C {
-				return func(a A) C { return g(f(a)) }
-			}
-		}
-
-		// Left: Ap(Ap(Map(compose)(fbc))(fab))(fa)
-		composed := fmapCompose.Map(compose)(fbc) // F[(A->B) -> (A->C)]
-		applied := apABAC.Ap(fab)(composed)        // F[A -> C]
-		left := apAC.Ap(fa)(applied)               // F[C]
-
-		// Right: Ap(fbc)(Ap(fab)(fa))
-		inner := apAB.Ap(fa)(fab)    // F[B]
-		right := apBC.Ap(inner)(fbc) // F[C]
-
-		if !eqFC(left, right) {
-			t.Fatalf("Apply associative composition violated:\n  Ap(Ap(Map(compose)(fbc))(fab))(fa) = %v\n  Ap(fbc)(Ap(fab)(fa))               = %v", left, right)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	ApplyAssociativeCompositionEngine(t, cfg.runner, eqFC,
+		ptdAB, ptdBC, fmapCompose, apAB, apBC, apAC, apABAC,
+		enginerapid.Wrap(genFA), enginerapid.Wrap(genAB), enginerapid.Wrap(genBC))
 }

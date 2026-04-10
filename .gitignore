@@ -17,8 +17,7 @@ profile.cov
 # Dependency directories
 # vendor/
 
-# Go workspace file
-go.work
+# Go workspace sum file (go.work is tracked intentionally)
 go.work.sum
 
 # env file

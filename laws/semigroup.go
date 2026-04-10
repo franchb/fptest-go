@@ -3,6 +3,7 @@ package laws
 import (
 	"testing"
 
+	enginerapid "github.com/franchb/fptest/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -12,21 +13,11 @@ func SemigroupLaws[A any](
 	genA *rapid.Generator[A],
 	eqA func(A, A) bool,
 	concat func(A, A) A,
+	opts ...Option,
 ) {
 	t.Helper()
-
-	t.Run("Semigroup/Associativity", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-		b := genA.Draw(t, "b")
-		c := genA.Draw(t, "c")
-
-		// Law: concat(concat(a, b), c) == concat(a, concat(b, c))
-		left := concat(concat(a, b), c)
-		right := concat(a, concat(b, c))
-		if !eqA(left, right) {
-			t.Fatalf("Semigroup associativity violated:\n  (a <> b) <> c = %v\n  a <> (b <> c) = %v", left, right)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	SemigroupLawsEngine(t, cfg.runner, enginerapid.Wrap(genA), eqA, concat)
 }
 
 // SemigroupInterfaceLaws verifies Semigroup laws using fp-go's Semigroup interface.
@@ -35,7 +26,8 @@ func SemigroupInterfaceLaws[A any](
 	genA *rapid.Generator[A],
 	eqA func(A, A) bool,
 	sg interface{ Concat(A, A) A },
+	opts ...Option,
 ) {
 	t.Helper()
-	SemigroupLaws(t, genA, eqA, sg.Concat)
+	SemigroupLaws(t, genA, eqA, sg.Concat, opts...)
 }
