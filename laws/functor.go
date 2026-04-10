@@ -10,6 +10,7 @@ package laws
 import (
 	"testing"
 
+	enginerapid "github.com/franchb/fptest/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -36,29 +37,11 @@ func FunctorLaws[FA, FB, FC, A, B, C any](
 	fmapAC func(func(A) C) func(FA) FC,
 	identity func(A) A,
 	compose func(func(A) B, func(B) C) func(A) C,
+	opts ...Option,
 ) {
 	t.Helper()
-
-	t.Run("Functor/Identity", rapid.MakeCheck(func(t *rapid.T) {
-		fa := genFA.Draw(t, "fa")
-
-		// Law: fmap(id)(fa) == fa
-		got := fmapAA(identity)(fa)
-		if !eqFA(got, fa) {
-			t.Fatalf("Functor identity law violated:\n  fa       = %v\n  fmap(id) = %v", fa, got)
-		}
-	}))
-
-	t.Run("Functor/Composition", rapid.MakeCheck(func(t *rapid.T) {
-		fa := genFA.Draw(t, "fa")
-		f := genAB.Draw(t, "f")
-		g := genBC.Draw(t, "g")
-
-		// Law: fmap(g . f)(fa) == fmap(g)(fmap(f)(fa))
-		composed := fmapAC(compose(f, g))(fa)
-		chained := fmapBC(g)(fmapAB(f)(fa))
-		if !eqFC(composed, chained) {
-			t.Fatalf("Functor composition law violated:\n  fmap(g.f)(fa) = %v\n  fmap(g)(fmap(f)(fa)) = %v", composed, chained)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	FunctorLawsEngine(t, cfg.runner,
+		enginerapid.Wrap(genFA), enginerapid.Wrap(genAB), enginerapid.Wrap(genBC),
+		eqFA, eqFC, fmapAA, fmapAB, fmapBC, fmapAC, identity, compose)
 }
