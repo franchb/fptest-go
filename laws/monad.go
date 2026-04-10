@@ -3,6 +3,7 @@ package laws
 import (
 	"testing"
 
+	enginerapid "github.com/franchb/fptest/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -31,35 +32,14 @@ func MonadLaws[FA, FB, FC, A, B, C any](
 	chainAB func(func(A) FB) func(FA) FB,
 	chainBC func(func(B) FC) func(FB) FC,
 	chainAC func(func(A) FC) func(FA) FC,
+	opts ...Option,
 ) {
 	t.Helper()
-
-	t.Run("Monad/LeftIdentity", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-		f := genKleisliAB.Draw(t, "f")
-
-		// Law: chain(f)(of(a)) == f(a)
-		got := chainAB(f)(of(a))
-		want := f(a)
-		if !eqFB(got, want) {
-			t.Fatalf("Monad left identity violated:\n  chain(f)(of(a)) = %v\n  f(a)            = %v", got, want)
-		}
-	}))
-
-	t.Run("Monad/Associativity", rapid.MakeCheck(func(t *rapid.T) {
-		fa := genFA.Draw(t, "fa")
-		f := genKleisliAB.Draw(t, "f")
-		g := genKleisliBC.Draw(t, "g")
-
-		// Law: chain(g)(chain(f)(fa)) == chain(x => chain(g)(f(x)))(fa)
-		left := chainBC(g)(chainAB(f)(fa))
-		right := chainAC(func(a A) FC {
-			return chainBC(g)(f(a))
-		})(fa)
-		if !eqFC(left, right) {
-			t.Fatalf("Monad associativity violated:\n  chain(g)(chain(f)(fa)) = %v\n  chain(g.f)(fa)         = %v", left, right)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	MonadLawsEngine[FA, FB, FC, A, B, C](t, cfg.runner,
+		enginerapid.Wrap(genA), enginerapid.Wrap(genFA),
+		enginerapid.Wrap(genKleisliAB), enginerapid.Wrap(genKleisliBC),
+		eqFB, eqFA, eqFC, of, chainAB, chainBC, chainAC)
 }
 
 // MonadLawsFull verifies all Monad laws including right identity, requiring an additional
@@ -78,41 +58,12 @@ func MonadLawsFull[FA, FB, FC, A, B, C any](
 	chainAB func(func(A) FB) func(FA) FB,
 	chainBC func(func(B) FC) func(FB) FC,
 	chainAC func(func(A) FC) func(FA) FC,
+	opts ...Option,
 ) {
 	t.Helper()
-
-	t.Run("Monad/LeftIdentity", rapid.MakeCheck(func(t *rapid.T) {
-		a := genA.Draw(t, "a")
-		f := genKleisliAB.Draw(t, "f")
-
-		got := chainAB(f)(of(a))
-		want := f(a)
-		if !eqFB(got, want) {
-			t.Fatalf("Monad left identity violated:\n  chain(f)(of(a)) = %v\n  f(a)            = %v", got, want)
-		}
-	}))
-
-	t.Run("Monad/RightIdentity", rapid.MakeCheck(func(t *rapid.T) {
-		fa := genFA.Draw(t, "fa")
-
-		// Law: chain(of)(fa) == fa
-		got := chainAA(of)(fa)
-		if !eqFA(got, fa) {
-			t.Fatalf("Monad right identity violated:\n  chain(of)(fa) = %v\n  fa            = %v", got, fa)
-		}
-	}))
-
-	t.Run("Monad/Associativity", rapid.MakeCheck(func(t *rapid.T) {
-		fa := genFA.Draw(t, "fa")
-		f := genKleisliAB.Draw(t, "f")
-		g := genKleisliBC.Draw(t, "g")
-
-		left := chainBC(g)(chainAB(f)(fa))
-		right := chainAC(func(a A) FC {
-			return chainBC(g)(f(a))
-		})(fa)
-		if !eqFC(left, right) {
-			t.Fatalf("Monad associativity violated:\n  chain(g)(chain(f)(fa)) = %v\n  chain(g.f)(fa)         = %v", left, right)
-		}
-	}))
+	cfg := resolveConfig(opts)
+	MonadLawsFullEngine[FA, FB, FC, A, B, C](t, cfg.runner,
+		enginerapid.Wrap(genA), enginerapid.Wrap(genFA),
+		enginerapid.Wrap(genKleisliAB), enginerapid.Wrap(genKleisliBC),
+		eqFB, eqFA, eqFC, of, chainAA, chainAB, chainBC, chainAC)
 }
