@@ -1,5 +1,4 @@
-github.com/IBM/fp-go/v2 v2.2.67 h1:zTqurTglwxHL7BM/MTFwrYbpiCZuMky3Bwex33i2USU=
-github.com/IBM/fp-go/v2 v2.2.67/go.mod h1:B16imozgmI9/gyJiCwT6V0xuiCdaWxkBvpqMj485ZhA=
+github.com/IBM/fp-go/v2 v2.2.70 h1:8hK1aQ965dZa5OGovf4VnJFksqDxpVx+i1PrFKvfcFI=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
