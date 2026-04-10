@@ -52,7 +52,7 @@ The property-based version tests the invariant, not individual cases. Rapid's au
 
 ### Why not just `pgregory.net/rapid` alone
 
-Rapid is an excellent property-based testing engine. fptest-go does not replace it — it builds on it. What rapid gives you is generators and a test runner. What it does *not* give you:
+Rapid is an excellent property-based testing engine, and it is fptest-go's default backend. fptest-go does not replace it — it builds on it. (fptest-go also supports [hegel](https://hegel.dev) as an alternative engine — see [Multi-engine support](#multi-engine-support-rapid-and-hegel) below.) What rapid gives you is generators and a test runner. What it does *not* give you:
 
 **No fp-go type awareness.** Rapid cannot generate `Option[A]`, `Either[E, A]`, `IO[A]`, or `IOEither[E, A]` out of the box. You would write `rapid.Custom(func(t *rapid.T) Option[int] { ... })` by hand, every time, in every test file. fptest-go provides `gen.GenOption`, `gen.GenResult`, `gen.GenIO`, `gen.GenIOResult` as composable, reusable generators.
 
@@ -61,6 +61,53 @@ Rapid is an excellent property-based testing engine. fptest-go does not replace 
 **No monadic generator composition.** Rapid's `*Generator[V]` is an opaque type. You cannot `Chain` two generators to express dependent generation (generate `lo`, then generate `hi > lo`) without dropping into the imperative `rapid.Custom` + `Draw` style. fptest-go's `Gen[A] = func(*rapid.T) A` is a transparent function type with a full `Functor`/`Applicative`/`Monad` — you can `Map`, `Chain`, and `Ap` generators the same way you compose fp-go pipelines.
 
 **No assertion helpers for sum types.** Rapid does not know that `Either` has a `Right` and a `Left`. You would `Fold` manually and call `t.Fatal` yourself. fptest-go provides `AssertRight`, `AssertSome`, `AssertIORight` etc. that unwrap and return the inner value for further chaining.
+
+### Multi-engine support: rapid and hegel
+
+fptest-go supports two property-based testing engines out of the box:
+
+| Engine | Backend | Shrinking | Extras |
+|--------|---------|-----------|--------|
+| [rapid](https://pgregory.net/rapid) (default) | Pure Go bitstream | Automatic, fast | Built into core module |
+| [hegel](https://hegel.dev) | [Hypothesis](https://hypothesis.works) (Python) | Hypothesis-quality | Domain generators (emails, URLs, dates, regex) |
+
+The core module (`github.com/franchb/fptest`) uses rapid by default. All existing API is backwards-compatible — no changes needed for current users. To use hegel, import the separate sub-module:
+
+```go
+import (
+    hegellaws "github.com/franchb/fptest/hegel/laws"
+    hegelprop "github.com/franchb/fptest/hegel/prop"
+    "github.com/franchb/fptest/hegel/hegelgen"
+    "hegel.dev/go/hegel"
+)
+
+func TestStringMonoidLaws(t *testing.T) {
+    // Same law, different engine — Hypothesis-backed shrinking
+    hegellaws.MonoidLaws(t,
+        hegel.Text(0, 100),
+        func(a, b string) bool { return a == b },
+        func(a, b string) string { return a + b },
+        "",
+    )
+}
+
+func TestEmailInvariant(t *testing.T) {
+    // Hegel's domain generators produce realistic test data
+    hegelprop.Invariant(t, "emails-have-at",
+        hegel.Emails(),
+        func(email string) bool { return strings.Contains(email, "@") },
+    )
+}
+```
+
+**Engine abstraction.** Under the hood, `engine.Runner` and `engine.Generator[A]` interfaces abstract the PBT engine. The core `laws` and `prop` packages accept an optional `laws.WithRunner(r)` / `prop.WithRunner(r)` to override the default rapid engine. The hegel sub-module provides convenience wrappers that accept `hegel.Generator[T]` directly.
+
+**Installation.** The hegel sub-module requires [hegel-core](https://hegel.dev):
+
+```bash
+go get github.com/franchb/fptest/hegel@latest
+uv tool install hegel-core  # or pip install hegel-core
+```
 
 ### Why not `testing` + `testify/assert`
 
