@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/franchb/fptest/laws"
+	"github.com/franchb/fptest-go/laws"
 	"pgregory.net/rapid"
 )
 

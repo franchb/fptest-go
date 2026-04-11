@@ -3,7 +3,7 @@ package hegel
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 	hegellib "hegel.dev/go/hegel"
 )
 

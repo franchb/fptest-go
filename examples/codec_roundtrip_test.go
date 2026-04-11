@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/franchb/fptest/prop"
+	"github.com/franchb/fptest-go/prop"
 	"pgregory.net/rapid"
 )
 

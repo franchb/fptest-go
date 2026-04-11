@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/IBM/fp-go/v2/option"
-	"github.com/franchb/fptest/gen"
-	"github.com/franchb/fptest/laws"
+	"github.com/franchb/fptest-go/gen"
+	"github.com/franchb/fptest-go/laws"
 	"pgregory.net/rapid"
 )
 

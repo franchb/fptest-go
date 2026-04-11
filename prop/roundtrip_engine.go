@@ -3,7 +3,7 @@ package prop
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // RoundTripEngine verifies that encode and decode are inverses: decode(encode(a)) == a.

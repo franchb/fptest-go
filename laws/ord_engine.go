@@ -3,7 +3,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // OrdLawsEngine verifies the Ord laws (antisymmetry, transitivity, totality, consistency)

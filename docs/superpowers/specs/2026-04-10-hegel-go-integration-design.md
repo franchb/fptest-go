@@ -2,7 +2,7 @@
 
 **Date:** 2026-04-10
 **Status:** Draft
-**Module:** `github.com/franchb/fptest`
+**Module:** `github.com/franchb/fptest-go`
 
 ## Problem
 
@@ -28,7 +28,7 @@ Single repository, two Go modules connected by a Go workspace.
 ```
 fptest-go/
 ├── go.work                      # workspace: . + ./hegel
-├── go.mod                       # github.com/franchb/fptest (rapid + fp-go)
+├── go.mod                       # github.com/franchb/fptest-go (rapid + fp-go)
 ├── engine/
 │   ├── engine.go                # T, Generator[A], Runner interfaces
 │   └── rapid/
@@ -40,7 +40,7 @@ fptest-go/
 ├── assert/                      # Unchanged
 ├── mock/                        # Unchanged
 ├── hegel/
-│   ├── go.mod                   # github.com/franchb/fptest/hegel
+│   ├── go.mod                   # github.com/franchb/fptest-go/hegel
 │   ├── runner.go                # HegelRunner implements engine.Runner
 │   ├── gen.go                   # hegel.Generator[T] -> engine.Generator[T]
 │   ├── hegelgen/
@@ -91,7 +91,7 @@ package rapid
 import (
     "testing"
 
-    "github.com/franchb/fptest/engine"
+    "github.com/franchb/fptest-go/engine"
     rapidlib "pgregory.net/rapid"
 )
 
@@ -240,8 +240,8 @@ package laws
 import (
     "testing"
 
-    hegelmod "github.com/franchb/fptest/hegel"
-    corelaws "github.com/franchb/fptest/laws"
+    hegelmod "github.com/franchb/fptest-go/hegel"
+    corelaws "github.com/franchb/fptest-go/laws"
     "hegel.dev/go/hegel"
 )
 

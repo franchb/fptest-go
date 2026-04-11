@@ -3,7 +3,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // EqLawsEngine verifies the Eq laws (reflexivity, symmetry, transitivity) using the engine abstraction.

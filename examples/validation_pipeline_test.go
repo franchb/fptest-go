@@ -7,8 +7,8 @@ import (
 
 	"github.com/IBM/fp-go/v2/either"
 	"github.com/IBM/fp-go/v2/eq"
-	"github.com/franchb/fptest/assert"
-	"github.com/franchb/fptest/prop"
+	"github.com/franchb/fptest-go/assert"
+	"github.com/franchb/fptest-go/prop"
 	"pgregory.net/rapid"
 )
 

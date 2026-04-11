@@ -7,8 +7,8 @@ import (
 
 	"github.com/IBM/fp-go/v2/either"
 	"github.com/IBM/fp-go/v2/ioeither"
-	"github.com/franchb/fptest/assert"
-	"github.com/franchb/fptest/mock"
+	"github.com/franchb/fptest-go/assert"
+	"github.com/franchb/fptest-go/mock"
 )
 
 // --- Domain ---

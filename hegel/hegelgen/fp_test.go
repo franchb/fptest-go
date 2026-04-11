@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	"github.com/IBM/fp-go/v2/option"
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
-	"github.com/franchb/fptest/hegel/hegelgen"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	"github.com/franchb/fptest-go/hegel/hegelgen"
 	hegellib "hegel.dev/go/hegel"
 )
 

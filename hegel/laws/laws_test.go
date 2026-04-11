@@ -4,7 +4,7 @@ import (
 	"math"
 	"testing"
 
-	hegellaws "github.com/franchb/fptest/hegel/laws"
+	hegellaws "github.com/franchb/fptest-go/hegel/laws"
 	hegellib "hegel.dev/go/hegel"
 )
 

@@ -10,8 +10,8 @@ import (
 	"github.com/IBM/fp-go/v2/option"
 	"github.com/IBM/fp-go/v2/ord"
 	"github.com/IBM/fp-go/v2/semigroup"
-	"github.com/franchb/fptest/gen"
-	"github.com/franchb/fptest/laws"
+	"github.com/franchb/fptest-go/gen"
+	"github.com/franchb/fptest-go/laws"
 	"pgregory.net/rapid"
 )
 

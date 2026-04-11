@@ -3,8 +3,8 @@ package hegelgen
 import (
 	"github.com/IBM/fp-go/v2/either"
 	"github.com/IBM/fp-go/v2/option"
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
 	hegellib "hegel.dev/go/hegel"
 )
 

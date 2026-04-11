@@ -60,7 +60,7 @@
 
 | File | Responsibility |
 |------|---------------|
-| `hegel/go.mod` | Module `github.com/franchb/fptest/hegel` |
+| `hegel/go.mod` | Module `github.com/franchb/fptest-go/hegel` |
 | `hegel/runner.go` | `HegelRunner` implements `engine.Runner` via `hegel.Case` |
 | `hegel/runner_test.go` | Tests for HegelRunner |
 | `hegel/gen.go` | `HegelGen[A]` wraps `hegel.Generator[T]` as `engine.Generator[A]` |
@@ -138,8 +138,8 @@ package rapid_test
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	"github.com/franchb/fptest-go/engine"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	rapidlib "pgregory.net/rapid"
 )
 
@@ -180,7 +180,7 @@ package rapid
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 	rapidlib "pgregory.net/rapid"
 )
 
@@ -239,9 +239,9 @@ package gen_test
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
-	enginerapid "github.com/franchb/fptest/engine/rapid"
-	"github.com/franchb/fptest/gen"
+	"github.com/franchb/fptest-go/engine"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
+	"github.com/franchb/fptest-go/gen"
 	"pgregory.net/rapid"
 )
 
@@ -283,8 +283,8 @@ Expected: FAIL — `gen.ToEngine` not found
 package gen
 
 import (
-	"github.com/franchb/fptest/engine"
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	"github.com/franchb/fptest-go/engine"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 )
 
 // ToEngine converts a Gen[A] to an engine.Generator[A] via the rapid adapter.
@@ -319,8 +319,8 @@ git commit -m "feat(gen): add ToEngine adapter for Gen[A] to engine.Generator"
 package laws
 
 import (
-	"github.com/franchb/fptest/engine"
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	"github.com/franchb/fptest-go/engine"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 )
 
 // Option configures law verification behavior.
@@ -380,7 +380,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // SemigroupLawsEngine verifies the Semigroup law (associativity) using the given engine.
@@ -417,7 +417,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -455,7 +455,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // MonoidLawsEngine verifies the Monoid laws using the given engine.
@@ -497,7 +497,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -568,7 +568,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // EqLawsEngine verifies the Eq laws using the given engine.
@@ -616,7 +616,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -652,7 +652,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // OrdLawsEngine verifies the Ord laws using the given engine.
@@ -715,7 +715,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -755,7 +755,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // LensLawsEngine verifies the Lens laws using the given engine.
@@ -809,7 +809,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -865,7 +865,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // FunctorLawsEngine verifies the Functor laws using the given engine.
@@ -922,7 +922,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -967,7 +967,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // ChainAssociativityEngine verifies the Chain associativity law using the given engine.
@@ -1007,7 +1007,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -1064,7 +1064,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // MonadLawsEngine verifies the Monad laws using the given engine.
@@ -1169,7 +1169,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -1258,7 +1258,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // ApplyAssociativeCompositionEngine verifies the Apply associative composition law using the given engine.
@@ -1315,7 +1315,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -1351,7 +1351,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // ApplicativeLawsEngine verifies the Applicative laws using the given engine.
@@ -1499,7 +1499,7 @@ package laws
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -1591,8 +1591,8 @@ git commit -m "feat(laws): add engine-generic Apply and Applicative law verifica
 package prop
 
 import (
-	"github.com/franchb/fptest/engine"
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	"github.com/franchb/fptest-go/engine"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 )
 
 // Option configures property testing behavior.
@@ -1624,7 +1624,7 @@ package prop
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // RoundTripEngine verifies encode/decode round-trip using the given engine.
@@ -1702,7 +1702,7 @@ package prop
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // OracleEngine verifies implementation matches reference using the given engine.
@@ -1794,7 +1794,7 @@ package prop
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -1852,7 +1852,7 @@ package prop
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 
@@ -1949,15 +1949,15 @@ use (
 Run:
 ```bash
 mkdir -p hegel
-cd hegel && go mod init github.com/franchb/fptest/hegel && cd ..
+cd hegel && go mod init github.com/franchb/fptest-go/hegel && cd ..
 ```
 
 Then add dependencies:
 ```bash
-cd hegel && go get github.com/franchb/fptest@latest && go get hegel.dev/go/hegel@latest && cd ..
+cd hegel && go get github.com/franchb/fptest-go@latest && go get hegel.dev/go/hegel@latest && cd ..
 ```
 
-**Note:** During development, the workspace `go.work` will resolve `github.com/franchb/fptest` to the local `./` module automatically.
+**Note:** During development, the workspace `go.work` will resolve `github.com/franchb/fptest-go` to the local `./` module automatically.
 
 - [ ] **Step 3: Verify workspace resolves**
 
@@ -1989,8 +1989,8 @@ package hegel_test
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
 )
 
 func TestHegelRunnerExecutesProperty(t *testing.T) {
@@ -2020,7 +2020,7 @@ import (
 	"os/exec"
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2058,8 +2058,8 @@ package hegel_test
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2081,7 +2081,7 @@ func TestHegelGenDrawsValues(t *testing.T) {
 package hegel
 
 import (
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2133,9 +2133,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
-	"github.com/franchb/fptest/hegel/hegelgen"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	"github.com/franchb/fptest-go/hegel/hegelgen"
 )
 
 func TestEmailsGenerator(t *testing.T) {
@@ -2184,8 +2184,8 @@ package hegelgen
 import (
 	"time"
 
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2261,9 +2261,9 @@ import (
 	"testing"
 
 	"github.com/IBM/fp-go/v2/option"
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
-	"github.com/franchb/fptest/hegel/hegelgen"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	"github.com/franchb/fptest-go/hegel/hegelgen"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2295,8 +2295,8 @@ package hegelgen
 import (
 	"github.com/IBM/fp-go/v2/either"
 	"github.com/IBM/fp-go/v2/option"
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2372,7 +2372,7 @@ package laws_test
 import (
 	"testing"
 
-	hegellaws "github.com/franchb/fptest/hegel/laws"
+	hegellaws "github.com/franchb/fptest-go/hegel/laws"
 	hegellib "hegel.dev/go/hegel"
 	"math"
 )
@@ -2409,8 +2409,8 @@ package laws
 import (
 	"testing"
 
-	fpthegel "github.com/franchb/fptest/hegel"
-	corelaws "github.com/franchb/fptest/laws"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	corelaws "github.com/franchb/fptest-go/laws"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2570,8 +2570,8 @@ import (
 	"strconv"
 	"testing"
 
-	fpthegel "github.com/franchb/fptest/hegel"
-	hegelprop "github.com/franchb/fptest/hegel/prop"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	hegelprop "github.com/franchb/fptest-go/hegel/prop"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2595,8 +2595,8 @@ package prop
 import (
 	"testing"
 
-	fpthegel "github.com/franchb/fptest/hegel"
-	coreprop "github.com/franchb/fptest/prop"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	coreprop "github.com/franchb/fptest-go/prop"
 	hegellib "hegel.dev/go/hegel"
 )
 
@@ -2720,8 +2720,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/franchb/fptest/laws"
-	hegellaws "github.com/franchb/fptest/hegel/laws"
+	"github.com/franchb/fptest-go/laws"
+	hegellaws "github.com/franchb/fptest-go/hegel/laws"
 	hegellib "hegel.dev/go/hegel"
 	"pgregory.net/rapid"
 )
@@ -2780,9 +2780,9 @@ import (
 	"math"
 	"testing"
 
-	hegellaws "github.com/franchb/fptest/hegel/laws"
-	hegelprop "github.com/franchb/fptest/hegel/prop"
-	"github.com/franchb/fptest/hegel/hegelgen"
+	hegellaws "github.com/franchb/fptest-go/hegel/laws"
+	hegelprop "github.com/franchb/fptest-go/hegel/prop"
+	"github.com/franchb/fptest-go/hegel/hegelgen"
 	hegellib "hegel.dev/go/hegel"
 )
 

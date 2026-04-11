@@ -1,8 +1,8 @@
 package gen
 
 import (
-	"github.com/franchb/fptest/engine"
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	"github.com/franchb/fptest-go/engine"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 )
 
 // ToEngine converts a Gen[A] to an engine.Generator[A] via the rapid adapter.

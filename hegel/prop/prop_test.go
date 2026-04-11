@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	hegelprop "github.com/franchb/fptest/hegel/prop"
+	hegelprop "github.com/franchb/fptest-go/hegel/prop"
 	hegellib "hegel.dev/go/hegel"
 )
 

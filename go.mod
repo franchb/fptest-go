@@ -1,4 +1,4 @@
-module github.com/franchb/fptest
+module github.com/franchb/fptest-go
 
 go 1.25.0
 
