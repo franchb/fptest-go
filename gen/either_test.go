@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/IBM/fp-go/v2/either"
-	"github.com/franchb/fptest/gen"
+	"github.com/franchb/fptest-go/gen"
 	"pgregory.net/rapid"
 )
 

@@ -3,8 +3,8 @@ package rapid_test
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	"github.com/franchb/fptest-go/engine"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	rapidlib "pgregory.net/rapid"
 )
 

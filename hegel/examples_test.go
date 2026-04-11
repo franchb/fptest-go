@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"testing"
 
-	hegellaws "github.com/franchb/fptest/hegel/laws"
-	hegelprop "github.com/franchb/fptest/hegel/prop"
+	hegellaws "github.com/franchb/fptest-go/hegel/laws"
+	hegelprop "github.com/franchb/fptest-go/hegel/prop"
 	hegellib "hegel.dev/go/hegel"
 )
 

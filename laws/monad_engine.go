@@ -3,7 +3,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // MonadLawsEngine verifies the Monad laws (left identity, associativity) using the engine abstraction.

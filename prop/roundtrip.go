@@ -4,7 +4,7 @@ package prop
 import (
 	"testing"
 
-	enginerapid "github.com/franchb/fptest/engine/rapid"
+	enginerapid "github.com/franchb/fptest-go/engine/rapid"
 	"pgregory.net/rapid"
 )
 

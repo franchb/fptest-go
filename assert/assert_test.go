@@ -8,7 +8,7 @@ import (
 	"github.com/IBM/fp-go/v2/io"
 	"github.com/IBM/fp-go/v2/ioeither"
 	"github.com/IBM/fp-go/v2/option"
-	"github.com/franchb/fptest/assert"
+	"github.com/franchb/fptest-go/assert"
 )
 
 func TestAssertSome(t *testing.T) {

@@ -7,8 +7,8 @@ package laws
 import (
 	"testing"
 
-	fpthegel "github.com/franchb/fptest/hegel"
-	corelaws "github.com/franchb/fptest/laws"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	corelaws "github.com/franchb/fptest-go/laws"
 	hegellib "hegel.dev/go/hegel"
 )
 

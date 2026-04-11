@@ -3,7 +3,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // LensLawsEngine verifies the Lens laws (get-set, set-get, set-set) using the engine abstraction.

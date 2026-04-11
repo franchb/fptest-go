@@ -6,8 +6,8 @@ package prop
 import (
 	"testing"
 
-	fpthegel "github.com/franchb/fptest/hegel"
-	coreprop "github.com/franchb/fptest/prop"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	coreprop "github.com/franchb/fptest-go/prop"
 	hegellib "hegel.dev/go/hegel"
 )
 

@@ -3,7 +3,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // SemigroupLawsEngine verifies the Semigroup law (associativity) using the engine abstraction.

@@ -3,7 +3,7 @@ package laws
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // ApplyAssociativeCompositionEngine verifies the Apply associative composition law

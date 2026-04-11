@@ -3,7 +3,7 @@ package prop
 import (
 	"testing"
 
-	"github.com/franchb/fptest/engine"
+	"github.com/franchb/fptest-go/engine"
 )
 
 // OracleEngine verifies that an implementation produces the same results as a reference

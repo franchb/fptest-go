@@ -71,13 +71,13 @@ fptest-go supports two property-based testing engines out of the box:
 | [rapid](https://pgregory.net/rapid) (default) | Pure Go bitstream | Automatic, fast | Built into core module |
 | [hegel](https://hegel.dev) | [Hypothesis](https://hypothesis.works) (Python) | Hypothesis-quality | Domain generators (emails, URLs, dates, regex) |
 
-The core module (`github.com/franchb/fptest`) uses rapid by default. All existing API is backwards-compatible — no changes needed for current users. To use hegel, import the separate sub-module:
+The core module (`github.com/franchb/fptest-go`) uses rapid by default. All existing API is backwards-compatible — no changes needed for current users. To use hegel, import the separate sub-module:
 
 ```go
 import (
-    hegellaws "github.com/franchb/fptest/hegel/laws"
-    hegelprop "github.com/franchb/fptest/hegel/prop"
-    "github.com/franchb/fptest/hegel/hegelgen"
+    hegellaws "github.com/franchb/fptest-go/hegel/laws"
+    hegelprop "github.com/franchb/fptest-go/hegel/prop"
+    "github.com/franchb/fptest-go/hegel/hegelgen"
     "hegel.dev/go/hegel"
 )
 
@@ -105,7 +105,7 @@ func TestEmailInvariant(t *testing.T) {
 **Installation.** The hegel sub-module requires [hegel-core](https://hegel.dev):
 
 ```bash
-go get github.com/franchb/fptest/hegel@latest
+go get github.com/franchb/fptest-go/hegel@latest
 uv tool install hegel-core  # or pip install hegel-core
 ```
 

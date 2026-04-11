@@ -4,8 +4,8 @@ import (
 	"math"
 	"testing"
 
-	"github.com/franchb/fptest/laws"
-	hegellaws "github.com/franchb/fptest/hegel/laws"
+	"github.com/franchb/fptest-go/laws"
+	hegellaws "github.com/franchb/fptest-go/hegel/laws"
 	hegellib "hegel.dev/go/hegel"
 	"pgregory.net/rapid"
 )

@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/franchb/fptest/engine"
-	fpthegel "github.com/franchb/fptest/hegel"
-	"github.com/franchb/fptest/hegel/hegelgen"
+	"github.com/franchb/fptest-go/engine"
+	fpthegel "github.com/franchb/fptest-go/hegel"
+	"github.com/franchb/fptest-go/hegel/hegelgen"
 )
 
 func TestEmailsGenerator(t *testing.T) {

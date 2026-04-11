@@ -3,7 +3,7 @@ package gen_test
 import (
 	"testing"
 
-	"github.com/franchb/fptest/gen"
+	"github.com/franchb/fptest-go/gen"
 	"pgregory.net/rapid"
 )
 
